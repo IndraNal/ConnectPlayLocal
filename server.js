@@ -1,69 +1,33 @@
-//require("dotenv").config();
+var express = require("express");
 
-// server.js
-// load the things we need
-var express = require('express');
-var expressLayouts = require('express-ejs-layouts');
+
+var PORT = process.env.PORT || 8080;
 
 var app = express();
 
-// set the view engine to ejs
-app.set('view engine', 'ejs');
-
-// use res.render to load up an ejs view file
-
-// index page 
 
 
-
-
-// about page 
-
-// app.listen(8080);
-// console.log('8080 is the magic port');
-// var express = require("express");
-// var exphbs = require("express-handlebars");
-
-//var db = require("./models");
-
-
-var PORT = process.env.PORT || 3000;
-
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+// Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
-// // Handlebars
-// app.engine(
-//   "handlebars",
-//   exphbs({
-//     defaultLayout: "main"
-//   })
-// );
-// app.set("view engine", "'ejs'");
+// Parse request body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// // Routes
+
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Import routes and give the server access to them.
 var routes = require("./controllers/playersController.js");
 
 app.use(routes);
 
-
-// var syncOptions = { force: false };
-
-// // If running a test, set syncOptions.force to true
-// // clearing the `testdb`
-// if (process.env.NODE_ENV === "test") {
-//   syncOptions.force = true;
-// }
-
-// // Starting the server, syncing our models ------------------------------------/
-//db.sequelize.sync(syncOptions).then(function () {
-app.listen(PORT, function () {
-  console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT,
-    PORT
-  );
+app.listen(PORT, function() {
+  console.log("App now listening at localhost:" + PORT);
 });
-//});
-
 

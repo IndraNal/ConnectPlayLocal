@@ -8,10 +8,10 @@ li {
   font-weight: bold;
 }
 
-.create-update-form {
+.create-profile {
   padding: 5px;
   margin: 5px;
-  background: aqua;
+  background: grey;
 }
 
 .form-group {
